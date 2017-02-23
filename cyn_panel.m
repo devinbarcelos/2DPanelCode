@@ -1,4 +1,4 @@
-function [ x,y ] = cyn_panel( r, n )
+function [ matNODES ] = cyn_panel( r, n )
 % cyn_panel( r, n )
 % Divides a cylinder of radius r into n number of panels (n+1 nodes)
 % Retruns x and y coordinates of each node
@@ -14,9 +14,8 @@ th = linspace(0, 2*pi, n+1);
 x = r.*cos(th);
 y = r.*sin(th);
 
-% Test plot, comment out before moving on
-% figure
-
+% Write x and y into their output matrix
+matNODES = [x', y'];
 end
 
 

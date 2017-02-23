@@ -1,4 +1,4 @@
-function [ x,y, c, n] = airfoil_panel( naca, c, n )
+function [ matNODES, c, n] = airfoil_panel( naca, c, n )
 % [ x,y, c] = airfoil_panel( naca, c, n )
 % Generates a paneled 4 digit naca airfoil of chord length c and n panels
 % and n+1 nodes
@@ -89,6 +89,9 @@ n = nodes - 1; %<-- Number of panels
 
 % Calcualte new chord length
 c = max(x);
+
+% Place x and y coordinates in their output matrix
+matNODES = [x', y'];
 
 %% ============================= Plot ================================== %%
 % Comment out before moving on
