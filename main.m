@@ -22,6 +22,20 @@ s = strvcat({'', ...
 '          (/------\)'});
 
 disp(s)
+
+%   The calculation order proceeds as follows:
+%       - Read from input file/run cylinder geometry/NACA Airfoil
+%       - Discritize geometry into panels
+%       - Calculate influence coefficients
+%       - Establish resultant vector
+%       - Solve linear set of equations
+%       - Calculate pressures and loads
+
+%% =============================== Input =============================== %%
+% These are the required inputs
+
+valALPHA = 5; % Angle of attack (deg)
+
 %% ===================== Intialize Cylinder Geometry =================== %%
 % Comment out this block if the cylinder case is not being used
 
@@ -59,7 +73,7 @@ valN = 50; % Approximate number of panels
 % which returns the x and y coordinates of the panel control point (x,y),
 % the panel length (s), the tangent vector (tx, ty), and  the normal vector
 % (nx, ny)s
-[matCP, vecS, matTANG, matNORM, vecEPS] = control_point( matNODES);
+[matCP, vecS, matTANG, matNORM, vecEPS] = control_point(matNODES);
 
 
 %% ============================ Plot Geometry ========================== %%
