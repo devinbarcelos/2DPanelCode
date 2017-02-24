@@ -1,8 +1,14 @@
-function [ vecQ ] = source_strength(vecB, matINDVEL)
+function [ vecQ ] = source_strength(vecR, matINFCOEFF)
 % This function solves for the source strength
 %
-%   OUTPUT:
+%   INPUTS
+%   vecR - Resulant Vector
+%   matINFCOEFF - Influence coefficient matrix
+%
+%   OUTPUTS
 %   vecQ - Source strength vector
-vecQ = matINDVEL\vecB;
+
+% Resultant vector divided by influence coeff
+vecQ = matINFCOEFF\vecR;
 end
 
