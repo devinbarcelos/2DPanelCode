@@ -73,6 +73,12 @@ valC = 1;
 valN = 10;
 matNODES = flat_plate(valC, valN);
 
+%% ========================= Input File Case =========================== %%
+% Comment out this block if inout file is not being used to generate
+% geometry
+strFILE =  'test.txt'
+matNODES = input_func(strFILE);
+
 %% ====================== Control Points =============================== %%
 
 % Passes x and y node coordinate information to the control_point function
@@ -81,30 +87,5 @@ matNODES = flat_plate(valC, valN);
 % (nx, ny)s
 [matCP, vecS, matTANG, matNORM, vecEPS] = control_point(matNODES);
 
-%% ================== Calculate Influence Matrix ======================= %%
-[indvel] = infcoeff(vecEPS, matCP);
-% %% ============================ Plot Geometry ========================== %%
-% 
-% % Plots the nodes, panel control point, tangent vectors, and normal vectors
-% 
-% valSCALE = 0.05; % Scales size of vectors for ease of viewing in plot
-% 
-% close all
-% figure
-% hold on
-% plot(matNODES(:, 1), matNODES(:, 2), '--o')
-% plot(matCP(:, 1), matCP(:, 2), 'rx')
-% axis equal 
-% grid on
-% for j = 1:1:size(matCP, 1)
-%     % plot tangents
-%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matTANG(j, 1), ...
-%         valSCALE.*matTANG(j, 2), 'r')
-%     
-%     % plot normals
-%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matNORM(j, 1),...
-%         valSCALE.*matNORM(j, 2), 'm')
-% end
-% hold off
-
+%% 
 
