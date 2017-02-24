@@ -53,6 +53,12 @@ valN = 50; % Approximate number of panels
 % Returns coordinates of each node and stores them in node stucture
 [matNODES, valC, valN] = airfoil_panel(valNACA, valC, valN);
 
+%% ========================= Flat Plate Case =========================== %%
+% Comment out this block if flat plate is not being used
+valC = 1;
+valN = 10;
+matNODES = flat_plate(valC, valN);
+
 %% ====================== Control Points =============================== %%
 
 % Passes x and y node coordinate information to the control_point function
