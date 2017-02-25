@@ -9,6 +9,6 @@ function [ vecQ ] = source_strength(vecR, matINFCOEFF)
 %   vecQ - Source strength vector
 
 % Resultant vector divided by influence coeff
-vecQ = matINFCOEFF\vecR;
+vecQ = matINFCOEFF\(vecR);
 end
 
