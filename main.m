@@ -76,7 +76,7 @@ valALPHA = 10; % Angle of attack (deg)
 %% ========================= Input File Case =========================== %%
 % Comment out this block if inout file is not being used to generate
 % geometry
-strFILE =  'naca.txt';
+strFILE =  'test.txt';
 matNODES = input_func(strFILE);
 
 %% ====================== Control Points =============================== %%
@@ -102,6 +102,9 @@ matNODES = input_func(strFILE);
 %% ================== Calculate Pressure Distribution ================== %%
 % Calcualte pressure
 [vecPRESSURE] = pressure(vecQ, matINFCOEFFT, matTANG);
+
+%% =========================== Plot Stream Lines ======================= %%
+plot_stream(  vecQ, vecEPS, vecS, vecINDUCEDX, vecINDUCEDY, vecINDUCERX, vecINDUCERY, matCP ) 
 
 %% ============================ Plot Geometry ========================== %%
 
