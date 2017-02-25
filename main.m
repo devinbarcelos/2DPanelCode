@@ -34,7 +34,7 @@ disp(s)
 %% =============================== Input =============================== %%
 % These are the required inputs
 
-valALPHA = 10; % Angle of attack (deg)
+valALPHA = 0; % Angle of attack (deg)
 
 % %% ===================== Intialize Cylinder Geometry =================== %%
 % % Comment out this block if the cylinder case is not being used
@@ -76,7 +76,7 @@ valALPHA = 10; % Angle of attack (deg)
 %% ========================= Input File Case =========================== %%
 % Comment out this block if inout file is not being used to generate
 % geometry
-strFILE =  'test.txt';
+strFILE =  'naca.txt';
 matNODES = input_func(strFILE);
 
 %% ====================== Control Points =============================== %%
@@ -104,32 +104,32 @@ matNODES = input_func(strFILE);
 [vecPRESSURE] = pressure(vecQ, matINFCOEFFT, matTANG);
 
 %% =========================== Plot Stream Lines ======================= %%
-plot_stream(  vecQ, vecEPS, vecS, vecINDUCEDX, vecINDUCEDY, vecINDUCERX, vecINDUCERY, matCP ) 
+plot_stream(  vecQ, vecEPS, vecS, vecINDUCEDX, vecINDUCEDY, vecINDUCERX, vecINDUCERY, matCP, vecUINF, matNODES ) 
 
 %% ============================ Plot Geometry ========================== %%
 
 % Plots the nodes, panel control point, tangent vectors, and normal vectors
 
 valSCALE = 1; % Scales size of vectors for ease of viewing in plot
+% 
+% close all
+% figure
+% hold on
+% plot(matNODES(:, 1), matNODES(:, 2), '-')
+% %plot(matCP(:, 1), matCP(:, 2), '-*')
+% axis equal 
+% grid on
+% % for j = 1:1:size(matCP, 1)
+% %     % plot tangents
+% %     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matTANG(j, 1), ...
+% %         valSCALE.*matTANG(j, 2), 'r')
+% %     
+% %     % plot normals
+% %     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matNORM(j, 1),...
+% %         valSCALE.*matNORM(j, 2), 'm')
+% % end
 
-close all
-figure
-hold on
-plot(matNODES(:, 1), matNODES(:, 2), '-')
-%plot(matCP(:, 1), matCP(:, 2), '-*')
-axis equal 
-grid on
-% for j = 1:1:size(matCP, 1)
-%     % plot tangents
-%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matTANG(j, 1), ...
-%         valSCALE.*matTANG(j, 2), 'r')
-%     
-%     % plot normals
-%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matNORM(j, 1),...
-%         valSCALE.*matNORM(j, 2), 'm')
-% end
-
-plot(matCP(:,1),vecPRESSURE)
+%plot(matCP(:,1),vecPRESSURE)
 hold off
 
 
