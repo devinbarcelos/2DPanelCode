@@ -76,8 +76,8 @@ matNODES = flat_plate(valC, valN);
 %% ========================= Input File Case =========================== %%
 % Comment out this block if inout file is not being used to generate
 % geometry
-strFILE =  'test.txt'
-matNODES = input_func(strFILE);
+% strFILE =  'test.txt';
+% matNODES = input_func(strFILE);
 
 %% ====================== Control Points =============================== %%
 
@@ -92,7 +92,7 @@ matNODES = input_func(strFILE);
 
 % Plots the nodes, panel control point, tangent vectors, and normal vectors
 
-valSCALE = 1; % Scales size of vectors for ease of viewing in plot
+valSCALE = 0.1; % Scales size of vectors for ease of viewing in plot
 
 close all
 figure
