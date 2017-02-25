@@ -17,7 +17,7 @@ matUINF = repmat(vecUINF,[len,1]);
 
 % Calculate resultant vector
 % b = -1*norm*uinf
-vecR = -1*dot(matNORM,matUINF,2);
+vecR = dot(matNORM,matUINF,2);
 
 end
 
