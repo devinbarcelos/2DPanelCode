@@ -43,10 +43,14 @@ vecS = repmat(vecS,[len,1]);
 vecQ = repmat(vecQ,[len,1]);
 
 % Calculate the induced velocities
-vecVxq = -0.5*log(((xy_iq(:,1)+vecS/2).^2+xy_iq(:,2).^2)./((xy_iq(:,1)-vecS/2).^2+xy_iq(:,2).^2));
-vecVyq = -1*(atan((xy_iq(:,1)+vecS/2)./xy_iq(:,2))-atan((xy_iq(:,1)-vecS/2)./xy_iq(:,2)));
+vecVxq = 0.5*log(((xy_iq(:,1)+vecS/2).^2+xy_iq(:,2).^2)./((xy_iq(:,1)-vecS/2).^2+xy_iq(:,2).^2));
+vecVyq = (atan((xy_iq(:,1)+vecS/2)./xy_iq(:,2))-atan((xy_iq(:,1)-vecS/2)./xy_iq(:,2)));
 
-matINDVEL = [vecQ.*vecVxq,vecQ.*vecVyq];
+matINDVEL1 = [vecQ.*vecVxq,vecQ.*vecVyq];
+matINDVEL1 = permute(matINDVEL1,[3,2,1]);
 
+for i = 1:len^2
+    matINDVEL(i,:) = (inv(matTRANS(:,:,i))*matINDVEL1(:,:,i)')';
+end
 end
 
