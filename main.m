@@ -103,6 +103,9 @@ matNODES = input_func(strFILE);
 % Calcualte pressure
 [vecPRESSURE] = pressure(vecQ, matINFCOEFFT, matTANG);
 
+%% =========================== Plot Stream Lines ======================= %%
+plot_stream(  vecQ, vecEPS, vecS, vecINDUCEDX, vecINDUCEDY, vecINDUCERX, vecINDUCERY, matCP ) 
+
 %% ============================ Plot Geometry ========================== %%
 
 % Plots the nodes, panel control point, tangent vectors, and normal vectors
