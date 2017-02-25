@@ -46,38 +46,38 @@ valALPHA = 5; % Angle of attack (deg)
 % % Returns coordinates of each node
 % [matNODES] = cyn_panel(valR, valN); 
 
-% %% ========================= Airfoil Case ============================== %%
-% % Comment out this block if the airfoil case is not being used
-% 
-% valNACA = 2412; % 4-Digit airfoil
-% valC = 1; % Approximate Chord length
-% valN = 50; % Approximate number of panels
-% 
-% % Pass airfoil information to airfoil generation function
-% 
-% % The airfoil generation function uses a the equaton of the NACA 4-digit
-% % airfoil (https://en.wikipedia.org/wiki/NACA_airfoil).
-% 
-% % This equation generates an airfoil with a blunt trailing edge, which will
-% % complicate the source code. Therefore, a sharp trailing edge is added by 
-% % the function. Because of this, the chord length and the number of panels 
-% % will not be exactly the same as entered into the function. The function
-% % returns the true number of panels, and the true chord length
-% %
-% % Returns coordinates of each node and stores them in node stucture
-% [matNODES, valC, valN] = airfoil_panel(valNACA, valC, valN);
+%% ========================= Airfoil Case ============================== %%
+% Comment out this block if the airfoil case is not being used
 
-%% ========================= Flat Plate Case =========================== %%
-% Comment out this block if flat plate is not being used
-valC = 1;
-valN = 10;
-matNODES = flat_plate(valC, valN);
+valNACA = 2412; % 4-Digit airfoil
+valC = 1; % Approximate Chord length
+valN = 101; % Approximate number of panels
 
-%% ========================= Input File Case =========================== %%
-% Comment out this block if inout file is not being used to generate
-% geometry
-strFILE =  'test.txt'
-matNODES = input_func(strFILE);
+% Pass airfoil information to airfoil generation function
+
+% The airfoil generation function uses a the equaton of the NACA 4-digit
+% airfoil (https://en.wikipedia.org/wiki/NACA_airfoil).
+
+% This equation generates an airfoil with a blunt trailing edge, which will
+% complicate the source code. Therefore, a sharp trailing edge is added by 
+% the function. Because of this, the chord length and the number of panels 
+% will not be exactly the same as entered into the function. The function
+% returns the true number of panels, and the true chord length
+%
+% Returns coordinates of each node and stores them in node stucture
+[matNODES, valC, valN] = airfoil_panel(valNACA, valC, valN);
+
+% %% ========================= Flat Plate Case =========================== %%
+% % Comment out this block if flat plate is not being used
+% valC = 1;
+% valN = 5;
+% matNODES = flat_plate(valC, valN);
+
+% %% ========================= Input File Case =========================== %%
+% % Comment out this block if inout file is not being used to generate
+% % geometry
+% strFILE =  'test.txt';
+% matNODES = input_func(strFILE);
 
 %% ====================== Control Points =============================== %%
 
@@ -87,5 +87,40 @@ matNODES = input_func(strFILE);
 % (nx, ny)s
 [matCP, vecS, matTANG, matNORM, vecEPS] = control_point(matNODES);
 
-%% 
+%% ==================== Calculate Influence Matrix ===================== %%
+[matINFCOEFF] = infcoeff(vecS, vecEPS, matCP, matNORM);
+
+%% ================== Calculate Freestream Velocity ==================== %%
+[vecUINF] = uinf(valALPHA);
+
+%% =================== Caclulate Resultant Vector ====================== %%
+[vecR] = resultant(vecUINF, matNORM);
+
+%% ==================== Solve for Source Strength ====================== %%
+[vecQ] = source_strength(vecR, matINFCOEFF);
+
+% %% ============================ Plot Geometry ========================== %%
+% 
+% % Plots the nodes, panel control point, tangent vectors, and normal vectors
+% 
+% valSCALE = 0.05; % Scales size of vectors for ease of viewing in plot
+% 
+% close all
+% figure
+% hold on
+% plot(matNODES(:, 1), matNODES(:, 2), '--o')
+% plot(matCP(:, 1), matCP(:, 2), 'rx')
+% axis equal 
+% grid on
+% for j = 1:1:size(matCP, 1)
+%     % plot tangents
+%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matTANG(j, 1), ...
+%         valSCALE.*matTANG(j, 2), 'r')
+%     
+%     % plot normals
+%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matNORM(j, 1),...
+%         valSCALE.*matNORM(j, 2), 'm')
+% end
+% hold off
+
 
