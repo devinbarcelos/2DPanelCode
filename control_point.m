@@ -24,7 +24,7 @@ ty = vecS;
 xc = vecS;
 yc = vecS;
 vecEPS = vecS;
-
+d = 0;
 for j = 2:1:length(x)       
     % Calculate the panel length
     vecS(j-1) = sqrt( (x(j) - x(j-1))^2 + (y(j) - y(j-1))^2  ); 
@@ -42,11 +42,22 @@ for j = 2:1:length(x)
      
      % Compute the x and y control points
      xc(j-1) = (x(j) + x(j-1))/2;
+     
      yc(j-1) = (y(j) + y(j-1))/2;
      
      % Compute the panel orientation angle (in radians)
-     
-     vecEPS(j-1) = atan(ty(j-1)/tx(j-1));     
+%      if yc(j-1)<0
+%          d = 1;
+%      end
+%      if d == 1
+%          %vecEPS(j-1) = atan2(ty(j-1),tx(j-1));
+%          vecEPS(j-1) = -1*(pi-acos(ny(j-1)));
+%      else
+%         vecEPS(j-1) = -1*(acos(ny(j-1)));
+%      end
+    %vecEPS(j-1) = asin((x(j)-x(j-1))/vecS(j));
+%    vecEPS(j-1) = atan(ty(j-1)/tx(j-1));
+    vecEPS(j-1) = -1*atan2((y(j)-y(j-1)),(x(j)-x(j-1)));
 end
 
 % Convert all values into their outputted matricies in coloumn form
@@ -54,7 +65,7 @@ matCP = [xc', yc'];
 vecS = vecS';
 matTANG = [tx' , ty'];
 matNORM = [nx', ny'];
-vecEPS = vecEPS';
+vecEPS = -1*vecEPS';
 
 
 
