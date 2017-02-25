@@ -34,7 +34,7 @@ disp(s)
 %% =============================== Input =============================== %%
 % These are the required inputs
 
-valALPHA = 10; % Angle of attack (deg)
+valALPHA = 5; % Angle of attack (deg)
 
 % %% ===================== Intialize Cylinder Geometry =================== %%
 % % Comment out this block if the cylinder case is not being used
@@ -76,7 +76,7 @@ valALPHA = 10; % Angle of attack (deg)
 %% ========================= Input File Case =========================== %%
 % Comment out this block if inout file is not being used to generate
 % geometry
-strFILE =  'naca.txt';
+strFILE =  'test.txt';
 matNODES = input_func(strFILE);
 
 %% ====================== Control Points =============================== %%
