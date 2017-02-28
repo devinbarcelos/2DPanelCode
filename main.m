@@ -36,7 +36,7 @@ disp(s)
 %% =============================== Input =============================== %%
 % These are the required inputs
 
-valALPHA = 5; % Angle of attack (deg)
+valALPHA = 0; % Angle of attack (deg)
 
 % %% ===================== Intialize Cylinder Geometry =================== %%
 % % Comment out this block if the cylinder case is not being used
@@ -78,7 +78,7 @@ valALPHA = 5; % Angle of attack (deg)
 %% ========================= Input File Case =========================== %%
 % Comment out this block if inout file is not being used to generate
 % geometry
-strFILE =  'naca.txt';
+strFILE =  'circ32.txt';
 matNODES = input_func(strFILE);
 
 %% ====================== Control Points =============================== %%
@@ -105,31 +105,73 @@ matNODES = input_func(strFILE);
 [vecPRESSURE] = pressure(vecQ, matINFCOEFFT, matTANG);
 
 %% =========================== Plot Stream Lines ======================= %%
+close all
 plot_stream( vecQ, vecEPS, vecS, matCP, vecUINF, matNODES )
 
-%% ============================ Plot Geometry ========================== %%
-% Plots the nodes, panel control point, tangent vectors, and normal vectors
+%% =========================== Plot Pressure Coefficients ============== %%
 
-valSCALE = 1; % Scales size of vectors for ease of viewing in plot
+% Divide into upper and lower surfaces
+vecUPPX = [];
+vecLOWX = [];
+vecUPPY = [];
+vecLOWY = [];
+vecPUPP = []; % Upper surface pressure coefficients
+vecPLOW = []; % Lower surface pressure coefficients
+
+for j = 1:1:size(matCP,1)
+    if matCP(j, 2) >= 0
+        vecUPPX = [vecUPPX; matCP(j,1)];
+        vecUPPY = [vecUPPY; matCP(j,2)];
+        vecPUPP = [vecPUPP; vecPRESSURE(j)];
+    else
+        vecLOWX = [vecLOWX; matCP(j,1)];
+        vecLOWY = [vecLOWY; matCP(j,2)];
+        vecPLOW = [vecPLOW; vecPRESSURE(j)];
+    end
+end
+
+% % Plots the pressure distribution
+
+figure
+hold on
+grid on
+plot(vecUPPX,vecPUPP, 'ob-') % Plot upper surface pressure
+plot(vecLOWX,vecPLOW, '^r-') % Plot lower surface pressure
+plot(matNODES(:, 1), matNODES(:, 2), '-') % Plot airfoil image
+axis equal
+axis([-5, 5, -5, 5])
+xlabel('x/c position')
+ylabel('Cp')
+legend('Upper Surface', 'Lower Surface')
+set(gca,'ydir','reverse')
+hold off
+
+%% ======================== Plots Analytical Cylinder ================== %%
+valA = 4;
+cyn_analytical( valA, vecUINF(1) );
+
+
+%% ============================ Plots Geometry ========================= %%
+% Plots the nodes, panel control point, tangent vectors, and normal vectors
+% valSCALE = 1; % Scales size of vectors for ease of viewing in plot
 % 
 % close all
 % figure
 % hold on
-% plot(matNODES(:, 1), matNODES(:, 2), '-')
+%plot(matNODES(:, 1), matNODES(:, 2), '-')
 % %plot(matCP(:, 1), matCP(:, 2), '-*')
 % axis equal 
 % grid on
-% % for j = 1:1:size(matCP, 1)
-% %     % plot tangents
-% %     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matTANG(j, 1), ...
-% %         valSCALE.*matTANG(j, 2), 'r')
-% %     
-% %     % plot normals
-% %     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matNORM(j, 1),...
-% %         valSCALE.*matNORM(j, 2), 'm')
-% % end
+% for j = 1:1:size(matCP, 1)
+%     % plot tangents
+%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matTANG(j, 1), ...
+%         valSCALE.*matTANG(j, 2), 'r')
+%     
+%     % plot normals
+%     quiver(matCP(j, 1),matCP(j, 2), valSCALE.*matNORM(j, 1),...
+%         valSCALE.*matNORM(j, 2), 'm')
+% end
 
-%plot(matCP(:,1),vecPRESSURE)
-hold off
+
 
 

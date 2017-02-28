@@ -16,10 +16,10 @@ function [ ] = plot_stream( vecQ, vecEPS, vecS, matCP, vecUINF, matNODES )
 % Calculate the induced velocity from each panel
 
 % Define grid for streamlines
-valXMIN = -0.5;
-valXMAX = 1.5;
-valYMIN = -.5;
-valYMAX = 0.5;
+valXMIN = -5;
+valXMAX = 5;
+valYMIN = -5;
+valYMAX = 5;
 
 meshX = linspace(valXMIN, valXMAX, 100);
 meshY = linspace(valYMIN, valYMAX, 100);
@@ -77,7 +77,8 @@ hold on
 figure
 starty = linspace(valYMIN, valYMAX, 40);
 startx = ones(1, size(starty, 2)).*valXMIN;
-
+xlabel('x/c position')
+ylabel('y/c position')
 plot(matNODES(:,1), matNODES(:,2), 'r')
 axis equal
 streamline(matX,matY,matU,matV, startx, starty)
